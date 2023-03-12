@@ -1,0 +1,20 @@
+v: 0
+micros:
+  - name: whoami
+    src: .
+    engine: custom
+    commands:
+      - apt-get update
+      - apt-get -y install zip
+      - curl -fsSL https://deno.land/x/install/install.sh | DENO_INSTALL=/usr/local sh -s v1.31.2
+      - deno compile --allow-env --allow-net --allow-sys --output deno index.ts
+    include:
+      - deno
+    presets:
+      env:
+        - name: DENO_DIR
+          description: Deno Configuration Directory
+          default: "/tmp/deno"
+    run: ./deno
+    public_routes:
+      - "/*"
